@@ -8,20 +8,23 @@ function ListarImovel({navigation}) {
   const [imoveis, setImoveis] = useState([]);
 
   useEffect(() => {
-    buscarTodos();
-    //const arrayImoveis = pegarImoveis();
-    //setImoveis(arrayImoveis);
-    console.log(imoveis);
+    obterImoveis();
   }, []);
 
-  async function pegarImoveis() {
-    //const array = await buscarTodos();
-    //return array;
+  async function obterImoveis() {
+    const imoveisObtidos = await buscarTodos();
+    setImoveis(imoveisObtidos);
+    console.log(imoveis);
   }
 
   return (
     <View>
-      <Text>Teste</Text>
+      <View>
+        {imoveis.map(imovel => {
+          return <Text>{imovel.bairro}</Text>;
+        })}
+        <Text>Teste</Text>
+      </View>
     </View>
   );
 }

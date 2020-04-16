@@ -68,8 +68,7 @@ export function buscarTodos() {
             reject('Não foram encontrados imóveis.');
           }
 
-          var imoveis = results.rows;
-          console.log(imoveis);
+          var imoveis = results.rows.raw();
           resolve(imoveis);
         });
       });
