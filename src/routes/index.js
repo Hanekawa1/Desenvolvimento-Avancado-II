@@ -1,7 +1,7 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   createMaterialTopTabNavigator,
   createBottomTabNavigator,
@@ -14,6 +14,7 @@ import Ajuda from '../pages/ajuda';
 import Sair from '../pages/sair';
 import CadastroUsuario from '../pages/cadastroUsuario';
 import CadastroImovel from '../pages/cadastroImovel';
+import ListarImovel from '../pages/listarImovel';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,7 +27,7 @@ import Colors from '../styles/colors';
 const AjudaPage = createStackNavigator({
   First: {
     screen: Ajuda,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Ajuda',
       headerLeft: () => (
         <NavigationDrawerStructure navigationProps={navigation} />
@@ -46,7 +47,7 @@ const Tab = createMaterialTopTabNavigator(
       screen: Main,
       navigationOptions: () => ({
         title: 'Imóveis',
-        tabBarIcon: ({focused}) => (
+        tabBarIcon: ({ focused }) => (
           <Icon
             name="file-code-o"
             size={15}
@@ -59,7 +60,7 @@ const Tab = createMaterialTopTabNavigator(
       screen: Main,
       navigationOptions: () => ({
         title: 'Usuário',
-        tabBarIcon: ({focused}) => (
+        tabBarIcon: ({ focused }) => (
           <Icon
             name="hand-pointer-o"
             color={focused === true ? Colors.white : Colors.whiteTransparent}
@@ -71,7 +72,7 @@ const Tab = createMaterialTopTabNavigator(
       screen: Main,
       navigationOptions: () => ({
         title: 'Contatos',
-        tabBarIcon: ({focused}) => (
+        tabBarIcon: ({ focused }) => (
           <Icon
             name="vcard-o"
             size={15}
@@ -108,7 +109,7 @@ const Tab = createMaterialTopTabNavigator(
 const MainPage = createStackNavigator({
   Second: {
     screen: Tab,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Main',
       headerLeft: () => (
         <NavigationDrawerStructure navigationProps={navigation} />
@@ -123,7 +124,7 @@ const MainPage = createStackNavigator({
   },
   Detalhar: {
     screen: Detalhar,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Detalhar',
       headerStyle: {
         backgroundColor: Colors.fundo,
@@ -142,7 +143,7 @@ const LoginPage = createStackNavigator({
   },
   CadastroUsuario: {
     screen: CadastroUsuario,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Cadastrar Usuário',
       headerStyle: {
         backgroundColor: Colors.fundo,
@@ -155,7 +156,7 @@ const LoginPage = createStackNavigator({
 const SairPage = createStackNavigator({
   Fourth: {
     screen: Sair,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Sair',
       headerStyle: {
         backgroundColor: Colors.fundo,
@@ -174,8 +175,24 @@ const HiddenPage = createStackNavigator({
 const CadastroImovelPage = createStackNavigator({
   CadastroImovel: {
     screen: CadastroImovel,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Cadastrar Imóvel',
+      headerLeft: () => (
+        <NavigationDrawerStructure navigationProps={navigation} />
+      ),
+      headerStyle: {
+        backgroundColor: Colors.fundo,
+      },
+      headerTintColor: Colors.fundo,
+    }),
+  },
+});
+
+const ListarImovelPage = createStackNavigator({
+  ListarImovel: {
+    screen: ListarImovel,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Listar Imóveis',
       headerLeft: () => (
         <NavigationDrawerStructure navigationProps={navigation} />
       ),
@@ -195,6 +212,7 @@ const DrawerNavigatorMenu = createDrawerNavigator(
     Sair: SairPage,
     Hidden: HiddenPage,
     CadastrarImovel: CadastroImovelPage,
+    ListarImovel: ListarImovelPage,
   },
   {
     contentComponent: Menu,

@@ -14,7 +14,8 @@ import styles from './styles';
 
 import Imovel from '../../model/imovel';
 
-function CadastroImovel({ navigation }) {
+function CadastroImovel({ navigation, route }) {
+  console.log(navigation.params);
   const [descricaoImovel, setDescricaoImovel] = useState('');
   const [email, setEmail] = useState('');
   const [logradouro, setLogradouro] = useState('');
@@ -24,6 +25,7 @@ function CadastroImovel({ navigation }) {
   const [bairro, setBairro] = useState('');
   const [cidade, setCidade] = useState('');
   const [uf, setUF] = useState('');
+  const [edicaoRota, setEdicaoRota] = useState('');
 
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
@@ -33,6 +35,34 @@ function CadastroImovel({ navigation }) {
     navigation.navigate('Main');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imovelState.navegar]);
+
+  useEffect(() => {
+    inicializar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function inicializar() {
+    if (route?.params.edicao !== undefined) {
+      setEdicaoRota(route.params.edicao);
+    } else {
+      const rotaParam = navigation.getParam('edicao');
+      setEdicaoRota(rotaParam);
+    }
+
+    console.log(edicaoRota);
+
+    if (edicaoRota === true) {
+      setDescricaoImovel(imovelState.imovel.descricaoImovel);
+      setEmail(imovelState.imovel.email);
+      setLogradouro(imovelState.imovel.setLogradouro);
+      setNumero(imovelState.imovel.numero);
+      setComplemento(imovelState.imovel.complemento);
+      setCep(imovelState.imovel.cep);
+      setBairro(imovelState.imovel.bairro);
+      setCidade(imovelState.imovel.cidade);
+      setUF(imovelState.imovel.uf);
+    }
+  }
 
   function cadastrar() {
     var imovel = new Imovel();
@@ -48,9 +78,6 @@ function CadastroImovel({ navigation }) {
     imovel.cidade = cidade;
     imovel.uf = uf;
     imovel.idUsuario = idUsuario;
-
-    console.log(auth.usuario.idUsuario);
-    console.log(imovel);
 
     dispatch({ type: 'CADASTRAR_IMOVEL_REQUEST', imovel });
   }

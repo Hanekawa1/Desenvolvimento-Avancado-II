@@ -1,4 +1,4 @@
-import { incluir, excluir } from '../../services/imovelService';
+import { incluir, excluir, editar } from '../../services/imovelService';
 import { put } from 'redux-saga/effects';
 import { ToastActionsCreators } from 'react-native-redux-toast';
 import ImovelActions from '../ducks/imovel';
@@ -44,6 +44,27 @@ export function* deletarImovel(action) {
   }
 }
 
+export function* edicaoImovel(action) {
+  try {
+    var retorno = yield editarImovel(action.imovel);
+
+    if (retorno.tipo === 1) {
+      yield apresentarMensagem(
+        2,
+        retorno.imovel,
+        'Imóvel cadastrado com sucesso!',
+      );
+      return;
+    } else {
+      yield apresentarMensagem(1, null, 'Não foi possível editar o imóvel');
+      return;
+    }
+  } catch (err) {
+    yield apresentarMensagem(1, null, err.message);
+    return;
+  }
+}
+
 function* incluirImovel(imovel) {
   const retorno = yield incluir(imovel)
     .then(res => {
@@ -85,6 +106,27 @@ function* excluirImovel(idImovel) {
   return retorno;
 }
 
+function* editarImovel(imovel) {
+  const retorno = yield editar(imovel)
+    .then(res => {
+      var ret = {
+        tipo: 1,
+        mensagem: '',
+        imovel: res,
+      };
+      return ret;
+    })
+    .catch(erro => {
+      var ret = {
+        tipo: 0,
+        mensagem: erro,
+        imovel: null,
+      };
+      return ret;
+    });
+  return retorno;
+}
+
 function* apresentarMensagem(tipo, imovel, mensagem) {
   if (tipo === 1) {
     yield put(ImovelActions.cadastrarImovelFailure);
@@ -101,7 +143,7 @@ function* apresentarMensagemExclusao(tipo, mensagem) {
     yield put(ToastActionsCreators.displayError(mensagem));
   } else {
     // erro: Actions must be plain objects.
-    yield put(ImovelActions.excluirImovelSuccess);
     yield put(ToastActionsCreators.displayInfo(mensagem));
+    yield put(ImovelActions.excluirImovelSuccess);
   }
 }

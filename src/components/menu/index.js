@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, Image} from 'react-native';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { View, Text, Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -9,7 +9,7 @@ import Logo from '../../assets/imagens/logo-unipam-com-selo.png';
 
 import Styles from './styles';
 
-function Menu({navigation}) {
+function Menu({ navigation }) {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ function Menu({navigation}) {
         name: route,
       };
 
-      dispatch({type: 'SET_NAVEGACAO', screen});
+      dispatch({ type: 'SET_NAVEGACAO', screen });
     }
   };
 
@@ -104,7 +104,9 @@ function Menu({navigation}) {
                 ? Styles.selectedTextStyle
                 : null,
             ]}
-            onPress={() => navigateToScreen('CadastrarImovel')}>
+            onPress={() =>
+              navigateToScreen('CadastrarImovel', { edicao: false })
+            }>
             Cadastrar Imóvel
           </Text>
         </View>

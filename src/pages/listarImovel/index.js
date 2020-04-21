@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { View, TouchableOpacity } from 'react-native';
 import { buscarTodos } from '../../services/imovelService';
 import ImovelList from '../../components/imovelList';
-
-import { useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function ListarImovel({ navigation }) {
   const [imoveis, setImoveis] = useState([]);
+  const [idUsuario, setIdUsuario] = useState(0);
+
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
 
   const imovelState = useSelector(state => state.imovel);
 
@@ -19,15 +23,46 @@ function ListarImovel({ navigation }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imovelState.navegar]);
 
+  useEffect(() => {
+    setIdUsuario(auth.usuario.idUsuario);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   async function obterImoveis() {
     const imoveisObtidos = await buscarTodos();
     setImoveis(imoveisObtidos);
   }
 
+  function excluir(idImovel) {
+    dispatch({ type: 'EXCLUIR_IMOVEL_REQUEST', idImovel });
+  }
+
+  function editar() {
+    navigation.navigate('CadastrarImovel', { edicao: true });
+  }
+
   return (
     <View>
       {imoveis.map(imovel => {
-        return <ImovelList imovel={imovel} />;
+        return (
+          <View>
+            <ImovelList imovel={imovel} />
+
+            {imovel.idUsuario === idUsuario ? (
+              <View>
+                <TouchableOpacity onPress={() => editar(imovel)}>
+                  <Icon name="file" size={18} />
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => excluir(imovel.idImovel)}>
+                  <Icon name="remove" size={18} />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <></>
+            )}
+          </View>
+        );
       })}
     </View>
   );

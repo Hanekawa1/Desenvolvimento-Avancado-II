@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch, connect} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch, connect } from 'react-redux';
 
-import {withNavigationFocus} from 'react-navigation';
+import { withNavigationFocus } from 'react-navigation';
 import ContactList from '../../components/contactList';
 import CadastroUsuario from '../cadastroUsuario';
 import ListarImovel from '../listarImovel';
@@ -17,7 +17,7 @@ import {
   Image,
 } from 'react-native';
 
-function Main({navigation, isFocused}) {
+function Main({ navigation, isFocused }) {
   const [telas, setTelas] = useState({
     Pasta1: () => NavegarPasta1(),
     Pasta2: () => NavegarPasta2(),
@@ -49,7 +49,7 @@ function Main({navigation, isFocused}) {
   };
 
   if (tab === 1) {
-    return <ListarImovel />;
+    return <ListarImovel navigation={navigation} />;
   }
   if (tab === 2) {
     return <CadastroUsuario tipoManutencaoParametro="Alteracao" />;

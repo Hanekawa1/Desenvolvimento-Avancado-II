@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RNExitApp from 'react-native-exit-app';
@@ -17,12 +17,12 @@ import styles from './styles';
 
 //{navigation}
 
-function Login({navigation}) {
+function Login({ navigation }) {
   const [ideUsuario, setIdeUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,8 +32,9 @@ function Login({navigation}) {
   useEffect(() => {
     if (auth.navegar === true) {
       navigation.navigate('Main');
-      dispatch({type: 'SIGN_IN_INICIAL'});
+      dispatch({ type: 'SIGN_IN_INICIAL' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.navegar]);
 
   async function inicializar() {
@@ -50,7 +51,7 @@ function Login({navigation}) {
   }
 
   function cadastrarUsuario() {
-    navigation.navigate('CadastroUsuario', {tipoManutencaoRota: 'Inclusao'});
+    navigation.navigate('CadastroUsuario', { tipoManutencaoRota: 'Inclusao' });
   }
 
   function autenticar() {
@@ -58,7 +59,7 @@ function Login({navigation}) {
       ideUsuario: ideUsuario,
       senhaUsuario: senha,
     };
-    dispatch({type: 'SIGN_IN_REQUEST', user});
+    dispatch({ type: 'SIGN_IN_REQUEST', user });
   }
 
   function cancelar() {
@@ -80,7 +81,7 @@ function Login({navigation}) {
             autoCapitalize="none"
             autoCorrect={false}
             value={ideUsuario}
-            onChangeText={(text) => setIdeUsuario(text)}
+            onChangeText={text => setIdeUsuario(text)}
           />
         </View>
 
@@ -93,7 +94,7 @@ function Login({navigation}) {
             secureTextEntry={secureTextEntry}
             placeholder="Digite a Senha do Usuário"
             value={senha}
-            onChangeText={(text) => setSenha(text)}
+            onChangeText={text => setSenha(text)}
           />
           <View style={styles.divOlho}>
             <TouchableOpacity

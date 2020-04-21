@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import { Text, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Menu, {
   MenuItem,
   MenuDivider,
@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Styles from './styles';
 
-function PopMenu({navigation}) {
+function PopMenu({ navigation }) {
   let textRef = React.createRef();
   let menuRef = null;
 
@@ -32,7 +32,7 @@ function PopMenu({navigation}) {
 
   return (
     <View style={Styles.container}>
-      <Text ref={textRef} style={Styles.headerText}></Text>
+      <Text ref={textRef} style={Styles.headerText} />
 
       <TouchableOpacity onPress={onPress}>
         <Icon name="ellipsis-v" style={Styles.icone} />

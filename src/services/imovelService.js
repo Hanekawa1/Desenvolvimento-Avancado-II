@@ -1,4 +1,4 @@
-import {OpenDataBase} from './database.js';
+import { OpenDataBase } from './database.js';
 
 export function incluir(imovel) {
   return new Promise((resolve, reject) => {
@@ -97,6 +97,54 @@ export function excluir(idImovel) {
 
           resolve(1);
         });
+      });
+    } catch (err) {
+      reject(err.message);
+    }
+  });
+}
+
+export function editar(imovel) {
+  return new Promise((resolve, reject) => {
+    try {
+      const sql = `
+      update Imovel set
+        descricaoImovel = ?, 
+        email = ?, 
+        logradouroImovel = ?, 
+        numero = ?, 
+        complemento = ?, 
+        cep = ?, 
+        bairro = ?, 
+        cidade = ?, 
+        uf = ?, 
+        idUsuario = ?, 
+        situacaoImovel = ?
+      where idImovel = ?`;
+
+      const db = OpenDataBase();
+
+      db.transaction(tx => {
+        tx.executeSql(
+          sql,
+          [
+            imovel.descricaoImovel,
+            imovel.email,
+            imovel.logradouro,
+            imovel.numero,
+            imovel.complemento,
+            imovel.cep,
+            imovel.bairro,
+            imovel.cidade,
+            imovel.uf,
+            imovel.idUsuario,
+            'a',
+            imovel.idImovel,
+          ],
+          (tx, results) => {
+            resolve(imovel);
+          },
+        );
       });
     } catch (err) {
       reject(err.message);

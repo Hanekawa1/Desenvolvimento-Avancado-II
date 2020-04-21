@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,7 +16,7 @@ import {
 
 import styles from './styles';
 
-function CadastroUsuario({navigation, tipoManutencaoParametro}) {
+function CadastroUsuario({ navigation, tipoManutencaoParametro }) {
   const [ideUsuario, setIdeUsuario] = useState('');
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [email, setEmail] = useState('');
@@ -29,13 +29,15 @@ function CadastroUsuario({navigation, tipoManutencaoParametro}) {
 
   useEffect(() => {
     inicializar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (auth.navegar === true && tipoManutencao === 'Inclusao') {
       navigation.navigate('Main');
-      dispatch({type: 'SIGN_IN_INICIAL'});
+      dispatch({ type: 'SIGN_IN_INICIAL' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.navegar]);
 
   async function inicializar() {
@@ -79,7 +81,7 @@ function CadastroUsuario({navigation, tipoManutencaoParametro}) {
     user.senhaUsuario = senha;
     user.email = email;
 
-    dispatch({type: 'CADASTRAR_USUARIO_REQUEST', user});
+    dispatch({ type: 'CADASTRAR_USUARIO_REQUEST', user });
   }
 
   return (

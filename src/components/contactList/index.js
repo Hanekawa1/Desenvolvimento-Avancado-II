@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import AccordionObject from '../../components/accordionObject';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
 import Styles from './styles';
 
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import Contacts from 'react-native-contacts';
-import {PermissionsAndroid} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 
 import Contact from '../contact';
 
@@ -17,7 +17,7 @@ function ContactList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({type: 'SET_NAVEGACAO_INICIAR'});
+    dispatch({ type: 'SET_NAVEGACAO_INICIAR' });
     lerContatos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -39,7 +39,7 @@ function ContactList() {
           //console.tron.log(newArr);
           //console.tron.log(contacts);
           setContactsList(await sortMyArray(contacts));
-          dispatch({type: 'SET_NAVEGACAO_FINALIZAR'});
+          dispatch({ type: 'SET_NAVEGACAO_FINALIZAR' });
         }
       });
     });
