@@ -1,10 +1,13 @@
-import {createReducer, createActions} from 'reduxsauce';
+import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
-const {Types, Creators} = createActions({
+const { Types, Creators } = createActions({
   cadastrarImovelRequest: ['imovel'],
   cadastrarImovelSuccess: ['imovel'],
   cadastrarImovelFailure: null,
+  excluirImovelRequest: ['idImovel'],
+  excluirImovelSuccess: null,
+  excluirImovelFailure: null,
 });
 
 export const ImovelTypes = Types;
@@ -21,7 +24,7 @@ export const cadastrarImovelRequestReducer = state =>
     imovel: null,
   });
 
-export const cadastrarImovelSuccessReducer = (state, {imovel}) => {
+export const cadastrarImovelSuccessReducer = (state, { imovel }) => {
   return state.merge({
     navegar: true,
     imovel: imovel,
@@ -35,8 +38,32 @@ export const cadastrarImovelFailureReducer = state => {
   });
 };
 
+export const excluirImovelRequestReducer = state => {
+  return state.merge({
+    navegar: false,
+    imovel: null,
+  });
+};
+
+export const excluirImovelFailureReducer = state => {
+  return state.merge({
+    navegar: true,
+    imovel: null,
+  });
+};
+
+export const excluirImovelSuccessReducer = state => {
+  return state.merge({
+    navegar: true,
+    imovel: null,
+  });
+};
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.CADASTRAR_IMOVEL_REQUEST]: cadastrarImovelRequestReducer,
   [Types.CADASTRAR_IMOVEL_SUCCESS]: cadastrarImovelSuccessReducer,
   [Types.CADASTRAR_IMOVEL_FAILURE]: cadastrarImovelFailureReducer,
+  [Types.EXCLUIR_IMOVEL_REQUEST]: excluirImovelRequestReducer,
+  [Types.EXCLUIR_IMOVEL_FAILURE]: excluirImovelFailureReducer,
+  [Types.EXCLUIR_IMOVEL_SUCCESS]: excluirImovelSuccessReducer,
 });

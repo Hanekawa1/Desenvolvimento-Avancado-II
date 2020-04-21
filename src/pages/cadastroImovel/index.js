@@ -1,6 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Text, View, StatusBar, TextInput, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Text,
+  View,
+  StatusBar,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -8,7 +14,7 @@ import styles from './styles';
 
 import Imovel from '../../model/imovel';
 
-function CadastroImovel({navigation}) {
+function CadastroImovel({ navigation }) {
   const [descricaoImovel, setDescricaoImovel] = useState('');
   const [email, setEmail] = useState('');
   const [logradouro, setLogradouro] = useState('');
@@ -25,6 +31,7 @@ function CadastroImovel({navigation}) {
 
   useEffect(() => {
     navigation.navigate('Main');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imovelState.navegar]);
 
   function cadastrar() {
@@ -45,7 +52,7 @@ function CadastroImovel({navigation}) {
     console.log(auth.usuario.idUsuario);
     console.log(imovel);
 
-    dispatch({type: 'CADASTRAR_IMOVEL_REQUEST', imovel});
+    dispatch({ type: 'CADASTRAR_IMOVEL_REQUEST', imovel });
   }
 
   function voltar() {

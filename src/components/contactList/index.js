@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import AccordionObject from '../../components/accordionObject';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 
 import Styles from './styles';
 
@@ -19,6 +19,7 @@ function ContactList() {
   useEffect(() => {
     dispatch({type: 'SET_NAVEGACAO_INICIAR'});
     lerContatos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function lerContatos() {
@@ -53,7 +54,7 @@ function ContactList() {
   return (
     <View style={Styles.containerPerfil}>
       <ScrollView>
-        {contactsList.map((contact) => {
+        {contactsList.map(contact => {
           return (
             <AccordionObject
               title={contact.displayName}

@@ -1,8 +1,8 @@
-import {createReducer, createActions} from 'reduxsauce';
+import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 /* types & actions creators */
-const {Types, Creators} = createActions({
+const { Types, Creators } = createActions({
   signInRequest: ['user'],
   signInSuccess: ['user'],
   signInFailure: ['user'],
@@ -49,7 +49,7 @@ export const signInRequestReducer = state =>
     usuario: null,
   });
 
-export const signInSuccessReducer = (state, {user}) => {
+export const signInSuccessReducer = (state, { user }) => {
   return state.merge({
     loading: false,
     login: true,
@@ -60,7 +60,7 @@ export const signInSuccessReducer = (state, {user}) => {
   });
 };
 
-export const signInFailureReducer = (state, {user}) => {
+export const signInFailureReducer = (state, { user }) => {
   return state.merge({
     loading: false,
     ideUsuario: user.ideUsuario,

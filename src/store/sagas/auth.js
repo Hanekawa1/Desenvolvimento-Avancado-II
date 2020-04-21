@@ -1,8 +1,8 @@
-import {call, put, select} from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import NetInfo from '@react-native-community/netinfo';
 //import AsyncStorage from '@react-native-community/async-storage';
-import {ToastActionsCreators} from 'react-native-redux-toast';
-import {ValidarEmail} from '../../utils/validarEmail';
+import { ToastActionsCreators } from 'react-native-redux-toast';
+import { ValidarEmail } from '../../utils/validarEmail';
 
 import {
   obterPorIdeUsuario,
@@ -15,7 +15,7 @@ import AuthActions from '../ducks/auth';
 
 export function* login(action) {
   try {
-    const {isConnected} = yield NetInfo.fetch();
+    const { isConnected } = yield NetInfo.fetch();
     if (isConnected) {
       var mensagemErro = yield consistirDadosUsuario(1, action.user);
 
@@ -72,7 +72,7 @@ function* apresentarMensagem(tipo, user, mensagem) {
 
 function* pesquisarUsuarioPorIdentificacaoDoUsuario(ideUsuario) {
   const retorno = yield obterPorIdeUsuario(ideUsuario)
-    .then((resp) => {
+    .then(resp => {
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -80,7 +80,7 @@ function* pesquisarUsuarioPorIdentificacaoDoUsuario(ideUsuario) {
       };
       return ret;
     })
-    .catch((erro) => {
+    .catch(erro => {
       var ret = {
         tipo: 2,
         mensagem: erro,
@@ -95,7 +95,7 @@ function* pesquisarUsuarioPorIdentificacaoDoUsuario(ideUsuario) {
 
 function* pesquisarUsuarioPorEmail(email) {
   const retorno = yield obterPorEmail(email)
-    .then((resp) => {
+    .then(resp => {
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -103,7 +103,7 @@ function* pesquisarUsuarioPorEmail(email) {
       };
       return ret;
     })
-    .catch((erro) => {
+    .catch(erro => {
       var ret = {
         tipo: 2,
         mensagem: erro,
@@ -118,7 +118,7 @@ function* pesquisarUsuarioPorEmail(email) {
 
 function* incluir(usuario) {
   const retorno = yield incluirUsuario(usuario)
-    .then((resp) => {
+    .then(resp => {
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -127,7 +127,7 @@ function* incluir(usuario) {
 
       return ret;
     })
-    .catch((erro) => {
+    .catch(erro => {
       var ret = {
         tipo: 2,
         mensagem: erro,
@@ -142,7 +142,7 @@ function* incluir(usuario) {
 
 function* alterar(usuario) {
   const retorno = yield alterarUsuario(usuario)
-    .then((resp) => {
+    .then(resp => {
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -151,7 +151,7 @@ function* alterar(usuario) {
 
       return ret;
     })
-    .catch((erro) => {
+    .catch(erro => {
       var ret = {
         tipo: 2,
         mensagem: erro,
@@ -165,7 +165,7 @@ function* alterar(usuario) {
 /* Função para cadastrar um usuário */
 export function* manterUsuario(action) {
   try {
-    const {isConnected} = yield NetInfo.fetch();
+    const { isConnected } = yield NetInfo.fetch();
     if (isConnected) {
       var mensagemErro = yield consistirDadosUsuario(2, action.user);
       if (mensagemErro !== '') {

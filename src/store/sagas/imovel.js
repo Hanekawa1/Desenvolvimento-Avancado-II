@@ -1,17 +1,13 @@
-import {incluir} from '../../services/imovelService';
-import {put} from 'redux-saga/effects';
-import {ToastActionsCreators} from 'react-native-redux-toast';
+import { incluir, excluir } from '../../services/imovelService';
+import { put } from 'redux-saga/effects';
+import { ToastActionsCreators } from 'react-native-redux-toast';
 import ImovelActions from '../ducks/imovel';
 
 export function* salvar(action) {
-  console.log('cheguei aqui, no saga do imovel');
   try {
-    console.log('beleza, vou mandar incluir o imovel');
     var retorno = yield incluirImovel(action.imovel);
-    console.log(retorno);
 
     if (retorno.tipo === 1) {
-      console.log('retorno é 1, inseriu, mostra mensagem de cadastro sucesso!');
       yield apresentarMensagem(
         2,
         retorno.imovel,
@@ -28,12 +24,29 @@ export function* salvar(action) {
   }
 }
 
+export function* deletarImovel(action) {
+  try {
+    var retorno = yield excluirImovel(action.idImovel);
+
+    if (retorno.tipo === 1) {
+      yield apresentarMensagemExclusao(2, 'Imóvel excluído com sucesso!');
+      return;
+    } else {
+      yield apresentarMensagemExclusao(
+        1,
+        'Não foi possível cadastrar o imóvel',
+      );
+      return;
+    }
+  } catch (err) {
+    yield apresentarMensagemExclusao(1, err.message);
+    return;
+  }
+}
+
 function* incluirImovel(imovel) {
-  console.log('cheguei na função de incluir com o imovel');
-  console.log(imovel);
   const retorno = yield incluir(imovel)
     .then(res => {
-      console.log('resolveu a promise');
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -53,15 +66,42 @@ function* incluirImovel(imovel) {
   return retorno;
 }
 
+function* excluirImovel(idImovel) {
+  const retorno = yield excluir(idImovel)
+    .then(res => {
+      var ret = {
+        tipo: 1,
+        mensagem: '',
+      };
+      return ret;
+    })
+    .catch(erro => {
+      var ret = {
+        tipo: 1,
+        mensagem: erro,
+      };
+      return ret;
+    });
+  return retorno;
+}
+
 function* apresentarMensagem(tipo, imovel, mensagem) {
-  console.log('Chegou no apresentar mensagem');
   if (tipo === 1) {
     yield put(ImovelActions.cadastrarImovelFailure);
     yield put(ToastActionsCreators.displayError(mensagem));
   } else {
-    console.log('vou mostrar a mensagem de sucesso');
     yield put(ImovelActions.cadastrarImovelSuccess(imovel));
-    console.log('aqui a mensagem é exibida');
+    yield put(ToastActionsCreators.displayInfo(mensagem));
+  }
+}
+
+function* apresentarMensagemExclusao(tipo, mensagem) {
+  if (tipo === 1) {
+    yield put(ImovelActions.excluirImovelFailure);
+    yield put(ToastActionsCreators.displayError(mensagem));
+  } else {
+    // erro: Actions must be plain objects.
+    yield put(ImovelActions.excluirImovelSuccess);
     yield put(ToastActionsCreators.displayInfo(mensagem));
   }
 }

@@ -77,3 +77,29 @@ export function buscarTodos() {
     }
   });
 }
+
+export function excluir(idImovel) {
+  return new Promise((resolve, reject) => {
+    try {
+      const sql = 'delete from Imovel where idImovel = ?';
+
+      const db = OpenDataBase();
+
+      db.transaction(tx => {
+        tx.executeSql(sql, [idImovel], (tx, results) => {
+          console.log(results);
+          console.log(results.rowsAffected);
+          console.log(results.rows);
+
+          if (results.rowsAffected !== 1) {
+            reject('Não foi possivel excluir o imóvel.');
+          }
+
+          resolve(1);
+        });
+      });
+    } catch (err) {
+      reject(err.message);
+    }
+  });
+}
