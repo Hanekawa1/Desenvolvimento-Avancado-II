@@ -192,7 +192,7 @@ function* apresentarMensagemExclusao(tipo, mensagem) {
   }
 }
 
-function* apresentarMensagemPesquisa(tipo, resposta, mensagem){
+function* apresentarMensagemPesquisa(tipo, resposta, mensagem) {
   if (tipo === 1) {
     yield put(ImovelActions.pesquisaImovelFailure());
     yield put(ToastActionsCreators.displayError(mensagem));

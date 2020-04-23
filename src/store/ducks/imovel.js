@@ -24,12 +24,16 @@ export const INITIAL_STATE = Immutable({
   navegar: false,
   imovel: null,
   imoveis: null,
+  pesquisa: null,
+  irPraMain: false,
+  edicao: false,
 });
 
 export const cadastrarImovelRequestReducer = state =>
   state.merge({
     navegar: true,
     imovel: null,
+    edicao: false,
   });
 
 export const cadastrarImovelSuccessReducer = (state, { imovel }) => {
@@ -71,6 +75,7 @@ export const editarImovelRequestReducer = state => {
   return state.merge({
     navegar: false,
     imovel: null,
+    edicao: true,
   });
 };
 
@@ -78,6 +83,7 @@ export const editarImovelSuccessReducer = state => {
   return state.merge({
     navegar: true,
     imovel: null,
+    edicao: false,
   });
 };
 
@@ -107,6 +113,8 @@ export const pesquisaImovelSuccessReducer = (state, { imoveis }) => {
     navegar: true,
     imovel: null,
     imoveis: imoveis,
+    pesquisa: true,
+    irPraMain: true,
   });
 };
 

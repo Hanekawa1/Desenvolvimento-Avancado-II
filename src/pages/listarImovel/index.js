@@ -26,12 +26,29 @@ function ListarImovel({ navigation }) {
   }, [imovelState.navegar]);
 
   useEffect(() => {
-    obterImoveis();
+    async function fetchData() {
+      await obterImoveis();
+    }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imovelState.imovel]);
 
+  useEffect(() => {
+    async function fetchData() {
+      await obterImoveis();
+    }
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imovelState.irPraMain, navigation]);
+
   async function obterImoveis() {
-    const imoveisObtidos = await buscarTodos();
+    let imoveisObtidos;
+    if (imovelState?.pesquisa || imovelState?.irPraMain) {
+      imoveisObtidos = imovelState.imoveis;
+    } else {
+      imoveisObtidos = await buscarTodos();
+    }
     if (imoveisObtidos.length === 0) {
       var mensagem = {
         tipo: 1,
