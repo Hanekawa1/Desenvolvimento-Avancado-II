@@ -1,7 +1,7 @@
-import {put} from 'redux-saga/effects';
-import {ToastActionsCreators} from 'react-native-redux-toast';
+import { put } from 'redux-saga/effects';
+import { ToastActionsCreators } from 'react-native-redux-toast';
 
-export function* apresentarMensagem({mensagem}) {
+export function* apresentarMensagem({ mensagem }) {
   // yield put(ToastActionsCreators.displayError(mensagem.texto));
   switch (mensagem.tipo) {
     case 1: {

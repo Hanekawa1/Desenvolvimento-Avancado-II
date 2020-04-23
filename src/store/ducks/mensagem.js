@@ -1,7 +1,7 @@
-import {createReducer, createActions} from 'reduxsauce';
+import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
-const {Types, Creators} = createActions({
+const { Types, Creators } = createActions({
   setMensagem: ['mensagem'],
 });
 
@@ -12,7 +12,7 @@ export const INITIAL_STATE = Immutable({
   mensagem: null,
 });
 
-export const setMensagemReducer = (state, {mensagem}) => {
+export const setMensagemReducer = (state, { mensagem }) => {
   return state.merge({
     mensagem: mensagem,
   });

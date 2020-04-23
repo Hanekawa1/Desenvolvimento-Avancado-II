@@ -32,18 +32,38 @@ function ListarImovel({ navigation }) {
 
   async function obterImoveis() {
     const imoveisObtidos = await buscarTodos();
+    if (imoveisObtidos.length === 0) {
+      var mensagem = {
+        tipo: 1,
+        texto: 'Não foram encontrados imóveis para exibir',
+      };
+      dispatch({
+        type: 'SET_MENSAGEM',
+        mensagem,
+      });
+    }
     setImoveis(imoveisObtidos);
   }
 
   function excluir(idImovel) {
     console.log(imovelState.imovel);
-    dispatch({ type: 'EXCLUIR_IMOVEL_REQUEST', idImovel });
+    dispatch({
+      type: 'EXCLUIR_IMOVEL_REQUEST',
+      idImovel,
+    });
   }
 
   function editar(imovel) {
-    dispatch({ type: 'MONTAR_IMOVEL', imovel });
-    var objeto = { edicao: true };
-    navigation.navigate('CadastrarImovel', { objeto });
+    dispatch({
+      type: 'MONTAR_IMOVEL',
+      imovel,
+    });
+    var objeto = {
+      edicao: true,
+    };
+    navigation.navigate('CadastrarImovel', {
+      objeto,
+    });
   }
 
   return (
@@ -52,13 +72,11 @@ function ListarImovel({ navigation }) {
         return (
           <View>
             <ImovelList imovel={imovel} />
-
             {imovel.idUsuario === idUsuario ? (
               <View>
                 <TouchableOpacity onPress={() => editar(imovel)}>
                   <Icon name="file" size={18} />
                 </TouchableOpacity>
-
                 <TouchableOpacity onPress={() => excluir(imovel.idImovel)}>
                   <Icon name="remove" size={18} />
                 </TouchableOpacity>

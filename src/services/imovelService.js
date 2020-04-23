@@ -64,10 +64,6 @@ export function buscarTodos() {
 
       db.transaction(tx => {
         tx.executeSql(sql, [], (tx, results) => {
-          if (results.rows.length === 0) {
-            reject('Não foram encontrados imóveis.');
-          }
-
           var imoveis = results.rows.raw();
           resolve(imoveis);
         });
