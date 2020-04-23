@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './styles';
 
 import {
@@ -15,20 +16,25 @@ import Styles from './styles';
 
 function Detalhar({ navigation }) {
   const [query, setQuery] = useState('');
-  var objeto = navigation.getParam('objeto');
-  console.log(objeto);
 
-  function pesquisar() {}
+  const dispatch = useDispatch();
+
+  function pesquisar() {
+    dispatch({ type: 'PESQUISA_IMOVEL_REQUEST', query });
+  }
 
   return (
     <View style={Styles.container}>
       <ScrollView>
         <View>
           <View>
+            <Text>
+              Digite o que você desejaria encontrar na descrição do imóvel
+            </Text>
             <Icon name="fort-awesome" size={18} style={styles.inlineImg} />
             <TextInput
               style={styles.input}
-              placeholder="Bairro do imóvel"
+              placeholder="Pesquise aqui"
               autoCapitalize="none"
               autoCorrect={false}
               value={query}

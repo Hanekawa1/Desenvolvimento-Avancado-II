@@ -1,4 +1,9 @@
-import { incluir, excluir, editar } from '../../services/imovelService';
+import {
+  incluir,
+  excluir,
+  editar,
+  pesquisar,
+} from '../../services/imovelService';
 import { put } from 'redux-saga/effects';
 import { ToastActionsCreators } from 'react-native-redux-toast';
 import ImovelActions from '../ducks/imovel';
@@ -54,6 +59,28 @@ export function* edicaoImovel(action) {
       return;
     } else {
       yield apresentarMensagem(1, null, 'Não foi possível editar o imóvel');
+      return;
+    }
+  } catch (err) {
+    yield apresentarMensagem(1, null, err.message);
+    return;
+  }
+}
+
+export function* pesquisarImovel(action) {
+  try {
+    var retorno = yield pesquisaImovel(action.query);
+    console.log(retorno);
+
+    if (retorno.tipo === 1) {
+      yield apresentarMensagemPesquisa(
+        2,
+        retorno.imoveis,
+        'Pesquisa concluída com sucesso',
+      );
+      return;
+    } else {
+      yield apresentarMensagem(1, null, 'Não foi possível realziar a pesquisa');
       return;
     }
   } catch (err) {
@@ -124,6 +151,27 @@ function* editarImovel(imovel) {
   return retorno;
 }
 
+function* pesquisaImovel(query) {
+  const retorno = yield pesquisar(query)
+    .then(res => {
+      var ret = {
+        tipo: 1,
+        mensagem: '',
+        imoveis: res,
+      };
+      return ret;
+    })
+    .catch(erro => {
+      var ret = {
+        tipo: 0,
+        mensagem: erro,
+        imoveis: null,
+      };
+      return ret;
+    });
+  return retorno;
+}
+
 function* apresentarMensagem(tipo, imovel, mensagem) {
   if (tipo === 1) {
     yield put(ImovelActions.cadastrarImovelFailure());
@@ -141,5 +189,15 @@ function* apresentarMensagemExclusao(tipo, mensagem) {
   } else {
     yield put(ToastActionsCreators.displayInfo(mensagem));
     yield put(ImovelActions.excluirImovelSuccess());
+  }
+}
+
+function* apresentarMensagemPesquisa(tipo, resposta, mensagem){
+  if (tipo === 1) {
+    yield put(ImovelActions.pesquisaImovelFailure());
+    yield put(ToastActionsCreators.displayError(mensagem));
+  } else {
+    yield put(ToastActionsCreators.displayInfo(mensagem));
+    yield put(ImovelActions.pesquisaImovelSuccess(resposta));
   }
 }

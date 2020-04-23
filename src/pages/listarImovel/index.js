@@ -70,7 +70,7 @@ function ListarImovel({ navigation }) {
     <View>
       {imoveis.map(imovel => {
         return (
-          <View>
+          <View key={imovel.idImovel}>
             <ImovelList imovel={imovel} />
             {imovel.idUsuario === idUsuario ? (
               <View>
