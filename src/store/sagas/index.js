@@ -3,7 +3,7 @@ import { all, takeLatest } from 'redux-saga/effects';
 // Importar os métodos
 import { login, manterUsuario } from './auth';
 import { apresentarMensagem } from './mensagem';
-import { salvar, deletarImovel, edicaoImovel } from './imovel';
+import { salvar, deletarImovel, edicaoImovel, pesquisarImovel } from './imovel';
 
 // Importar os types
 import { AuthTypes } from '../ducks/auth';
@@ -18,5 +18,6 @@ export default function* rootSaga() {
     takeLatest(ImovelTypes.CADASTRAR_IMOVEL_REQUEST, salvar),
     takeLatest(ImovelTypes.EXCLUIR_IMOVEL_REQUEST, deletarImovel),
     takeLatest(ImovelTypes.EDITAR_IMOVEL_REQUEST, edicaoImovel),
+    takeLatest(ImovelTypes.PESQUISA_IMOVEL_REQUEST, pesquisarImovel),
   ]);
 }

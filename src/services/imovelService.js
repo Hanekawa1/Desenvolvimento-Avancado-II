@@ -148,3 +148,21 @@ export function editar(imovel) {
     }
   });
 }
+
+export function pesquisar(query) {
+  return new Promise((resolve, reject) => {
+    try {
+      const sql = `select * from Imovel where descricaoImovel like "%${query}%"`;
+
+      const db = OpenDataBase();
+
+      db.transaction(tx => {
+        tx.executeSql(sql, [], (tx, results) => {
+          resolve(results.rows.raw());
+        });
+      });
+    } catch (err) {
+      reject(err.message);
+    }
+  });
+}

@@ -28,7 +28,7 @@ function ListarImovel({ navigation }) {
   useEffect(() => {
     obterImoveis();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imovelState.recarregar]);
+  }, [imovelState.imovel]);
 
   async function obterImoveis() {
     const imoveisObtidos = await buscarTodos();
@@ -70,7 +70,7 @@ function ListarImovel({ navigation }) {
     <View>
       {imoveis.map(imovel => {
         return (
-          <View>
+          <View key={imovel.idImovel}>
             <ImovelList imovel={imovel} />
             {imovel.idUsuario === idUsuario ? (
               <View>
