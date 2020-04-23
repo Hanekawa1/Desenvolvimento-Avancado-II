@@ -28,7 +28,7 @@ function ListarImovel({ navigation }) {
   useEffect(() => {
     obterImoveis();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imovelState.recarregar]);
+  }, [imovelState.imovel]);
 
   async function obterImoveis() {
     const imoveisObtidos = await buscarTodos();
