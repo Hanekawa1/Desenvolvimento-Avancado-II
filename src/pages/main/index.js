@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { withNavigationFocus } from 'react-navigation';
 import ContactList from '../../components/contactList';
 import CadastroUsuario from '../cadastroUsuario';
 import ListarImovel from '../listarImovel';
-
-import {
-  View,
-  Text,
-  ScrollView,
-  SafeAreaView,
-  TouchableOpacity,
-  StatusBar,
-  ActivityIndicator,
-  Image,
-} from 'react-native';
 
 function Main({ navigation, isFocused }) {
   const [telas, setTelas] = useState({
@@ -26,11 +15,15 @@ function Main({ navigation, isFocused }) {
   const [tab, setTab] = useState(1);
 
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+
+  const imovelState = useSelector(state => state.imovel);
 
   useEffect(() => {
     if (isFocused) {
       telas[`${navigation.state.routeName}`]();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   function NavegarPasta1() {

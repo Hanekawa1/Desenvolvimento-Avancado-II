@@ -17,6 +17,7 @@ import {
 import styles from './styles';
 
 function CadastroUsuario({ navigation, tipoManutencaoParametro }) {
+  console.log(tipoManutencaoParametro);
   const [ideUsuario, setIdeUsuario] = useState('');
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [email, setEmail] = useState('');

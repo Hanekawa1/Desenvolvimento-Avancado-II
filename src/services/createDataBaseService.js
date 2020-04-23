@@ -1,4 +1,4 @@
-import {OpenDataBase} from './database.js';
+import { OpenDataBase } from './database.js';
 
 export function CreateDataBaseService() {
   try {
@@ -39,7 +39,7 @@ export function CreateDataBaseService() {
       txn.executeSql(sqlCreateIndexUserEmail, []);
       txn.executeSql(sqlCreateTableImovel, []);
     });
-    console.log('o banco foi criado parça');
+    console.log('o banco foi criado');
     return '';
   } catch (err) {
     return err.message;

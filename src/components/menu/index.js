@@ -12,6 +12,7 @@ import Styles from './styles';
 function Menu({ navigation }) {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  var objeto = { edicao: false };
 
   const [activeItemKey, setActiveItemKey] = useState('Main');
 
@@ -104,9 +105,7 @@ function Menu({ navigation }) {
                 ? Styles.selectedTextStyle
                 : null,
             ]}
-            onPress={() =>
-              navigateToScreen('CadastrarImovel', { edicao: false })
-            }>
+            onPress={() => navigateToScreen('CadastrarImovel', { objeto })}>
             Cadastrar Imóvel
           </Text>
         </View>

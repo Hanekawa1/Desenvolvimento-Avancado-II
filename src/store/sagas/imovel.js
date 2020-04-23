@@ -32,10 +32,7 @@ export function* deletarImovel(action) {
       yield apresentarMensagemExclusao(2, 'Imóvel excluído com sucesso!');
       return;
     } else {
-      yield apresentarMensagemExclusao(
-        1,
-        'Não foi possível cadastrar o imóvel',
-      );
+      yield apresentarMensagemExclusao(1, 'Não foi possível excluir o imóvel');
       return;
     }
   } catch (err) {
@@ -52,7 +49,7 @@ export function* edicaoImovel(action) {
       yield apresentarMensagem(
         2,
         retorno.imovel,
-        'Imóvel cadastrado com sucesso!',
+        'Imóvel editado com sucesso!',
       );
       return;
     } else {
@@ -129,7 +126,7 @@ function* editarImovel(imovel) {
 
 function* apresentarMensagem(tipo, imovel, mensagem) {
   if (tipo === 1) {
-    yield put(ImovelActions.cadastrarImovelFailure);
+    yield put(ImovelActions.cadastrarImovelFailure());
     yield put(ToastActionsCreators.displayError(mensagem));
   } else {
     yield put(ImovelActions.cadastrarImovelSuccess(imovel));
@@ -139,11 +136,10 @@ function* apresentarMensagem(tipo, imovel, mensagem) {
 
 function* apresentarMensagemExclusao(tipo, mensagem) {
   if (tipo === 1) {
-    yield put(ImovelActions.excluirImovelFailure);
+    yield put(ImovelActions.excluirImovelFailure());
     yield put(ToastActionsCreators.displayError(mensagem));
   } else {
-    // erro: Actions must be plain objects.
     yield put(ToastActionsCreators.displayInfo(mensagem));
-    yield put(ImovelActions.excluirImovelSuccess);
+    yield put(ImovelActions.excluirImovelSuccess());
   }
 }

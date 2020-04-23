@@ -15,18 +15,20 @@ function ListarImovel({ navigation }) {
   const imovelState = useSelector(state => state.imovel);
 
   useEffect(() => {
+    setIdUsuario(auth.usuario.idUsuario);
     obterImoveis();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    //navigation.navigate('Main');
+    navigation.navigate('Main');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imovelState.navegar]);
 
   useEffect(() => {
-    setIdUsuario(auth.usuario.idUsuario);
+    obterImoveis();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [imovelState.recarregar]);
 
   async function obterImoveis() {
     const imoveisObtidos = await buscarTodos();
@@ -34,11 +36,14 @@ function ListarImovel({ navigation }) {
   }
 
   function excluir(idImovel) {
+    console.log(imovelState.imovel);
     dispatch({ type: 'EXCLUIR_IMOVEL_REQUEST', idImovel });
   }
 
-  function editar() {
-    navigation.navigate('CadastrarImovel', { edicao: true });
+  function editar(imovel) {
+    dispatch({ type: 'MONTAR_IMOVEL', imovel });
+    var objeto = { edicao: true };
+    navigation.navigate('CadastrarImovel', { objeto });
   }
 
   return (

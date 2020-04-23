@@ -2,10 +2,7 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
-import {
-  createMaterialTopTabNavigator,
-  createBottomTabNavigator,
-} from 'react-navigation-tabs';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import Login from '../pages/login';
 import Main from '../pages/main';
@@ -125,7 +122,7 @@ const MainPage = createStackNavigator({
   Detalhar: {
     screen: Detalhar,
     navigationOptions: ({ navigation }) => ({
-      title: 'Detalhar',
+      title: 'Pesquisar',
       headerStyle: {
         backgroundColor: Colors.fundo,
       },

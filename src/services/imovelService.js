@@ -22,7 +22,7 @@ export function incluir(imovel) {
 
       const db = OpenDataBase();
 
-      console.log('DUELO');
+      console.log('executando sql');
       db.transaction(tx => {
         tx.executeSql(
           sql,
@@ -49,7 +49,7 @@ export function incluir(imovel) {
       });
     } catch (err) {
       console.log(err);
-      console.log('deu pau');
+      console.log('deu erro');
       reject(err.message);
     }
   });
@@ -105,6 +105,7 @@ export function excluir(idImovel) {
 }
 
 export function editar(imovel) {
+  console.log(imovel);
   return new Promise((resolve, reject) => {
     try {
       const sql = `

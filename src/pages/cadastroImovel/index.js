@@ -14,8 +14,9 @@ import styles from './styles';
 
 import Imovel from '../../model/imovel';
 
-function CadastroImovel({ navigation, route }) {
-  console.log(navigation.params);
+function CadastroImovel({ navigation }) {
+  var objeto = navigation.dangerouslyGetParent().getParam('objeto');
+
   const [descricaoImovel, setDescricaoImovel] = useState('');
   const [email, setEmail] = useState('');
   const [logradouro, setLogradouro] = useState('');
@@ -25,16 +26,11 @@ function CadastroImovel({ navigation, route }) {
   const [bairro, setBairro] = useState('');
   const [cidade, setCidade] = useState('');
   const [uf, setUF] = useState('');
-  const [edicaoRota, setEdicaoRota] = useState('');
+  const [idImovel, setIdImovel] = useState('');
 
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const imovelState = useSelector(state => state.imovel);
-
-  useEffect(() => {
-    navigation.navigate('Main');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imovelState.navegar]);
 
   useEffect(() => {
     inicializar();
@@ -42,25 +38,28 @@ function CadastroImovel({ navigation, route }) {
   }, []);
 
   function inicializar() {
-    if (route?.params.edicao !== undefined) {
-      setEdicaoRota(route.params.edicao);
-    } else {
-      const rotaParam = navigation.getParam('edicao');
-      setEdicaoRota(rotaParam);
-    }
-
-    console.log(edicaoRota);
-
-    if (edicaoRota === true) {
+    if (objeto?.edicao === true) {
       setDescricaoImovel(imovelState.imovel.descricaoImovel);
       setEmail(imovelState.imovel.email);
-      setLogradouro(imovelState.imovel.setLogradouro);
+      setLogradouro(imovelState.imovel.logradouroImovel);
       setNumero(imovelState.imovel.numero);
       setComplemento(imovelState.imovel.complemento);
       setCep(imovelState.imovel.cep);
       setBairro(imovelState.imovel.bairro);
       setCidade(imovelState.imovel.cidade);
       setUF(imovelState.imovel.uf);
+      setIdImovel(imovelState.imovel.idImovel);
+    } else {
+      setDescricaoImovel('');
+      setEmail('');
+      setLogradouro('');
+      setNumero('');
+      setComplemento('');
+      setCep('');
+      setBairro('');
+      setCidade('');
+      setUF('');
+      setIdImovel('');
     }
   }
 
@@ -79,7 +78,12 @@ function CadastroImovel({ navigation, route }) {
     imovel.uf = uf;
     imovel.idUsuario = idUsuario;
 
-    dispatch({ type: 'CADASTRAR_IMOVEL_REQUEST', imovel });
+    if (objeto?.edicao === true) {
+      imovel.idImovel = idImovel;
+      dispatch({ type: 'EDITAR_IMOVEL_REQUEST', imovel });
+    } else {
+      dispatch({ type: 'CADASTRAR_IMOVEL_REQUEST', imovel });
+    }
   }
 
   function voltar() {
@@ -218,7 +222,11 @@ function CadastroImovel({ navigation, route }) {
 
       <View style={styles.containerButton}>
         <TouchableOpacity style={styles.button} onPress={() => cadastrar()}>
-          <Text style={styles.buttonText}> Cadastrar</Text>
+          {objeto?.edicao === true ? (
+            <Text style={styles.buttonText}>Editar</Text>
+          ) : (
+            <Text style={styles.buttonText}>Cadastrar</Text>
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={() => voltar()}>
