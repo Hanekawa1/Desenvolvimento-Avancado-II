@@ -119,6 +119,9 @@ const MainPage = createStackNavigator({
       // headerRightContainerStyle : ( { height:200})
     }),
   },
+});
+
+const DetalharPage = createStackNavigator({
   Detalhar: {
     screen: Detalhar,
     navigationOptions: ({ navigation }) => ({
@@ -210,6 +213,7 @@ const DrawerNavigatorMenu = createDrawerNavigator(
     Hidden: HiddenPage,
     CadastrarImovel: CadastroImovelPage,
     ListarImovel: ListarImovelPage,
+    Detalhar: DetalharPage,
   },
   {
     contentComponent: Menu,

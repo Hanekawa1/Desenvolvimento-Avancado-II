@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles';
 
 import {
@@ -16,8 +16,15 @@ import Styles from './styles';
 
 function Detalhar({ navigation }) {
   const [query, setQuery] = useState('');
+  const imovelState = useSelector(state => state.imovel);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(imovelState);
+    navigation.navigate('ListarImoveis');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imovelState.navegar]);
 
   function pesquisar() {
     dispatch({ type: 'PESQUISA_IMOVEL_REQUEST', query });

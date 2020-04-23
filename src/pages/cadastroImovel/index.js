@@ -33,9 +33,20 @@ function CadastroImovel({ navigation }) {
   const imovelState = useSelector(state => state.imovel);
 
   useEffect(() => {
-    inicializar();
+    async function fetchData() {
+      inicializar();
+    }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      inicializar();
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imovelState.edicao]);
 
   function inicializar() {
     if (objeto?.edicao === true) {
