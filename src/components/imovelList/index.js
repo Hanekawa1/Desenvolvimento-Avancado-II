@@ -10,18 +10,18 @@ function ImovelList({ imovel }) {
     <View key={imovel.idImovel} style={styles.containerPerfil}>
       <ScrollView>
         <AccordionObject
-          title={imovel.descricaoImovel}
-          id={imovel.idImovel}
+          title={imovel.DescricaoImovel}
+          id={imovel._id}
           icon="user-o">
           <View style={styles.container}>
             <ScrollView>
               <View style={styles.containerImovel}>
                 <Text style={styles.texto}>
-                  Rua {imovel.logradouroImovel}, nº {imovel.numero}, bairro{' '}
-                  {imovel.bairro}
+                  Rua {imovel.LogradouroImovel}, nº {imovel.Numero}, bairro{' '}
+                  {imovel.Bairro}
                 </Text>
                 <Text style={styles.texto}>
-                  {imovel.complemento} - {imovel.cidade} - {imovel.uf}
+                  {imovel.Complemento} - {imovel.Cidade} - {imovel.Uf}
                 </Text>
               </View>
             </ScrollView>

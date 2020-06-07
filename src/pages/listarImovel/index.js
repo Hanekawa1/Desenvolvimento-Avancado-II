@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, TouchableOpacity } from 'react-native';
-import { buscarTodos } from '../../services/imovelService';
+//import { buscarTodos } from '../../services/imovelService';
 import ImovelList from '../../components/imovelList';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { get } from '../../services/api';
 
 function ListarImovel({ navigation }) {
   const [imoveis, setImoveis] = useState([]);
@@ -15,7 +16,7 @@ function ListarImovel({ navigation }) {
   const imovelState = useSelector(state => state.imovel);
 
   useEffect(() => {
-    setIdUsuario(auth.usuario.idUsuario);
+    setIdUsuario(auth.usuario._id);
     obterImoveis();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -62,8 +63,19 @@ function ListarImovel({ navigation }) {
     setImoveis(imoveisObtidos);
   }
 
+  function buscarTodos() {
+    return new Promise((resolve, reject) => {
+      get('/imovel/all', 'COM_TOKEN_USUARIO')
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error.response.data.error);
+        });
+    });
+  }
+
   function excluir(idImovel) {
-    console.log(imovelState.imovel);
     dispatch({
       type: 'EXCLUIR_IMOVEL_REQUEST',
       idImovel,
@@ -87,14 +99,14 @@ function ListarImovel({ navigation }) {
     <View>
       {imoveis.map(imovel => {
         return (
-          <View key={imovel.idImovel}>
+          <View key={imovel._id}>
             <ImovelList imovel={imovel} />
-            {imovel.idUsuario === idUsuario ? (
+            {imovel.Usuario._id === idUsuario ? (
               <View>
                 <TouchableOpacity onPress={() => editar(imovel)}>
                   <Icon name="file" size={18} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => excluir(imovel.idImovel)}>
+                <TouchableOpacity onPress={() => excluir(imovel._id)}>
                   <Icon name="remove" size={18} />
                 </TouchableOpacity>
               </View>

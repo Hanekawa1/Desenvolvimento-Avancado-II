@@ -1,4 +1,5 @@
-import {OpenDataBase} from './database.js';
+//arquivo mantido apenas para registro
+import { OpenDataBase } from './database.js';
 import Usuario from '../model/usuario';
 
 export function obterPorIdeUsuario(ideUsuario) {

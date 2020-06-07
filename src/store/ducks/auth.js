@@ -6,6 +6,7 @@ const { Types, Creators } = createActions({
   signInRequest: ['user'],
   signInSuccess: ['user'],
   signInFailure: ['user'],
+  createSuccess: null,
   signInCancel: null,
   signInInicial: null,
   cadastrarUsuarioRequest: ['user'],
@@ -60,6 +61,14 @@ export const signInSuccessReducer = (state, { user }) => {
   });
 };
 
+export const createSuccessReducer = state => {
+  return state.merge({
+    loading: false,
+    login: false,
+    navegar: false,
+  });
+};
+
 export const signInFailureReducer = (state, { user }) => {
   return state.merge({
     loading: false,
@@ -84,4 +93,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_CANCEL]: signInCancelReducer,
   [Types.SIGN_IN_INICIAL]: signInInicialReducer,
   [Types.CADASTRAR_USUARIO_REQUEST]: cadastrarUsuarioRequestReducer,
+  [Types.CREATE_SUCCESS]: createSuccessReducer,
 });

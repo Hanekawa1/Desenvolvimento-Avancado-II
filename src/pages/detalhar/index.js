@@ -21,8 +21,9 @@ function Detalhar({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(imovelState);
-    navigation.navigate('ListarImoveis');
+    if (imovelState.navegar === true) {
+      navigation.navigate('Main');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imovelState.navegar]);
 
@@ -33,22 +34,18 @@ function Detalhar({ navigation }) {
   return (
     <View style={Styles.container}>
       <ScrollView>
-        <View>
-          <View>
-            <Text>
-              Digite o que você desejaria encontrar na descrição do imóvel
-            </Text>
-            <Icon name="fort-awesome" size={18} style={styles.inlineImg} />
-            <TextInput
-              style={styles.input}
-              placeholder="Pesquise aqui"
-              autoCapitalize="none"
-              autoCorrect={false}
-              value={query}
-              onChangeText={text => setQuery(text)}
-            />
-          </View>
-        </View>
+        <Text>
+          Digite o que você desejaria encontrar na descrição do imóvel
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Pesquise aqui"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={query}
+          onChangeText={text => setQuery(text)}
+        />
+
         <TouchableOpacity style={Styles.button} onPress={() => pesquisar()}>
           <Text style={Styles.buttonText}>Pesquisar</Text>
         </TouchableOpacity>

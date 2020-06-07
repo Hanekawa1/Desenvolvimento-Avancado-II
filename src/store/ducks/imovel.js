@@ -103,7 +103,7 @@ export const montarImovelReducer = (state, { imovel }) => {
 
 export const pesquisaImovelRequestReducer = state => {
   return state.merge({
-    navegar: true,
+    navegar: false,
     imovel: null,
   });
 };
