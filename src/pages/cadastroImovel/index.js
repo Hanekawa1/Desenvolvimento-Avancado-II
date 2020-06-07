@@ -50,16 +50,16 @@ function CadastroImovel({ navigation }) {
 
   function inicializar() {
     if (objeto?.edicao === true) {
-      setDescricaoImovel(imovelState.imovel.descricaoImovel);
-      setEmail(imovelState.imovel.email);
-      setLogradouro(imovelState.imovel.logradouroImovel);
-      setNumero(imovelState.imovel.numero);
-      setComplemento(imovelState.imovel.complemento);
-      setCep(imovelState.imovel.cep);
-      setBairro(imovelState.imovel.bairro);
-      setCidade(imovelState.imovel.cidade);
-      setUF(imovelState.imovel.uf);
-      setIdImovel(imovelState.imovel.idImovel);
+      setDescricaoImovel(imovelState.imovel.DescricaoImovel);
+      setEmail(imovelState.imovel.Email);
+      setLogradouro(imovelState.imovel.LogradouroImovel);
+      setNumero(imovelState.imovel.Numero);
+      setComplemento(imovelState.imovel.Complemento);
+      setCep(imovelState.imovel.Cep);
+      setBairro(imovelState.imovel.Bairro);
+      setCidade(imovelState.imovel.Cidade);
+      setUF(imovelState.imovel.Uf);
+      setIdImovel(imovelState.imovel._id);
     } else {
       setDescricaoImovel('');
       setEmail('');

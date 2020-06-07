@@ -1,12 +1,9 @@
-import {
-  incluir,
-  excluir,
-  editar,
-  pesquisar,
-} from '../../services/imovelService';
+import { editar, pesquisar } from '../../services/imovelService';
 import { put } from 'redux-saga/effects';
 import { ToastActionsCreators } from 'react-native-redux-toast';
 import ImovelActions from '../ducks/imovel';
+
+import { post, deleteAxios, putAxios, get } from '../../services/api';
 
 export function* salvar(action) {
   try {
@@ -90,8 +87,9 @@ export function* pesquisarImovel(action) {
 }
 
 function* incluirImovel(imovel) {
-  const retorno = yield incluir(imovel)
+  const retorno = yield incluirImovelApi(imovel)
     .then(res => {
+      console.log(res);
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -112,8 +110,9 @@ function* incluirImovel(imovel) {
 }
 
 function* excluirImovel(idImovel) {
-  const retorno = yield excluir(idImovel)
+  const retorno = yield excluirImovelApi(idImovel)
     .then(res => {
+      console.log(res);
       var ret = {
         tipo: 1,
         mensagem: '',
@@ -131,7 +130,7 @@ function* excluirImovel(idImovel) {
 }
 
 function* editarImovel(imovel) {
-  const retorno = yield editar(imovel)
+  const retorno = yield editarImovelApi(imovel)
     .then(res => {
       var ret = {
         tipo: 1,
@@ -152,7 +151,7 @@ function* editarImovel(imovel) {
 }
 
 function* pesquisaImovel(query) {
-  const retorno = yield pesquisar(query)
+  const retorno = yield pesquisarApi(query)
     .then(res => {
       var ret = {
         tipo: 1,
@@ -200,4 +199,82 @@ function* apresentarMensagemPesquisa(tipo, resposta, mensagem) {
     yield put(ToastActionsCreators.displayInfo(mensagem));
     yield put(ImovelActions.pesquisaImovelSuccess(resposta));
   }
+}
+
+function incluirImovelApi(imovel) {
+  const data = {
+    DescricaoImovel: imovel.descricaoImovel,
+    Email: imovel.email,
+    LogradouroImovel: imovel.logradouro,
+    Numero: imovel.numero,
+    Complemento: imovel.complemento,
+    Cep: imovel.cep,
+    Bairro: imovel.bairro,
+    Cidade: imovel.cidade,
+    Uf: imovel.uf,
+    SituacaoImovel: 'D',
+  };
+
+  return new Promise((resolve, reject) => {
+    post('/imovel', 'COM_TOKEN_USUARIO', data, 'S')
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error.response.data.error);
+      });
+  });
+}
+
+function excluirImovelApi(idImovel) {
+  return new Promise((resolve, reject) => {
+    deleteAxios('/imovel/' + idImovel, 'COM_TOKEN_USUARIO')
+      .then(response => {
+        console.log(response);
+        resolve(response);
+      })
+      .catch(error => {
+        reject(error.response.data.error);
+      });
+  });
+}
+
+function editarImovelApi(imovel) {
+  console.log(imovel);
+  const data = {
+    DescricaoImovel: imovel.descricaoImovel,
+    Email: imovel.email,
+    LogradouroImovel: imovel.logradouro,
+    Numero: imovel.numero,
+    Complemento: imovel.complemento,
+    Cep: imovel.cep,
+    Bairro: imovel.bairro,
+    Cidade: imovel.cidade,
+    Uf: imovel.uf,
+    SituacaoImovel: 'D',
+  };
+
+  return new Promise((resolve, reject) => {
+    putAxios('/imovel/' + imovel.idImovel, 'COM_TOKEN_USUARIO', data, 'S')
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error.response.data.error);
+      });
+  });
+}
+
+function pesquisarApi(query) {
+  console.log(query);
+
+  return new Promise((resolve, reject) => {
+    get('/imovel/find/' + query, 'COM_TOKEN_USUARIO')
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error.response.data.error);
+      });
+  });
 }

@@ -1,3 +1,5 @@
+//arquivo mantido apenas para registro
+
 import { OpenDataBase } from './database.js';
 
 export function CreateDataBaseService() {
